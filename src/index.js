@@ -5,15 +5,21 @@ import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddlewhere from 'redux-saga';
+import rootSaga from './sagas';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
-// if problems:
-// comment out line 7 and add:
+// API problems?
+// comment out axios.defaults.withCredentials line and add:
 // axios.defaults.baseURL = 'https://cors-anywhere.herokuapp.com/https://rem.dbwebb.se/api';
 
-const store = createStore(reducers);
+const sagaMiddleware = createSagaMiddlewhere();
+
+const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
