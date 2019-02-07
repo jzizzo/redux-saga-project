@@ -1,4 +1,11 @@
-import { takeEvery, takeLatest, take, call, fork, put } from 'redux-saga/effects';
+import {
+  takeEvery,
+  takeLatest,
+  take,
+  call,
+  fork,
+  put
+} from 'redux-saga/effects';
 import * as actions from '../actions/users';
 import * as api from '../api/users';
 
@@ -9,7 +16,9 @@ function* getUsers() {
       items: result.data.data
     }));
   } catch(e) {
-
+    yield put(actions.usersError({
+      error: 'Oh, no! We were unable to retrieve the users at this time. =('
+    }));
   }
 }
 
@@ -25,7 +34,9 @@ function* createUser(action) {
     });
     yield call(getUsers);
   } catch (e) {
-    console.log(e);
+    yield put(actions.usersError({
+      error: 'Oh, no! We were unable to create this user at this time. =('
+    }));
   }
 }
 
@@ -38,7 +49,9 @@ function* deleteUser({ userId }) {
     yield call(api.deleteUser, userId);
     yield call(getUsers);
   } catch (e) {
-    console.log(e);
+    yield put(actions.usersError({
+      error: 'Oh, no! We were unable to delete this user at this time. =('
+    }));
   }
 }
 

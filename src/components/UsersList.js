@@ -1,5 +1,9 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import {
+  ListGroup,
+  ListGroupItem,
+  Button
+} from 'reactstrap';
 
 const UsersList = ({ users, onDeleteUser }) => {
   return (
@@ -16,7 +20,7 @@ const UsersList = ({ users, onDeleteUser }) => {
         } else {
           return 0;
         }
-      }).map((user) => {
+      }).map(user => {
         return (
           <ListGroupItem key={user.id}>
             <section style={{display: 'flex'}}>
@@ -24,7 +28,11 @@ const UsersList = ({ users, onDeleteUser }) => {
                 {user.firstName} {user.lastName}
               </div>
               <div>
-                <Button outline color="danger" onClick={() => onDeleteUser(user.id)}>
+                <Button
+                  outline
+                  color="danger"
+                  onClick={() => onDeleteUser(user.id)}
+                >
                   Delete
                 </Button>
               </div>
